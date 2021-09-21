@@ -62,10 +62,9 @@
   cursor: pointer;
 }
 
-.bg_card_img {
+.card_container {
   position: absolute;
-  width: 20rem;
-  top: -6.5rem;
-  left: 32.5rem;
-  border-radius: 0.75rem;
+  top: -7rem;
+  left: 38%;
+  right: 38%;
 }
