@@ -1,25 +1,50 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./FormComponent.module.css";
 // import { Card } from "../card/Card";
 import Cards from "react-credit-cards";
 import "react-credit-cards/es/styles-compiled.css";
+import { formatCreditCardNumber } from "../../utils/formatters";
+import Payment from "payment";
 
 export const FormComponent = () => {
   const [cardNumber, setCardNumber] = useState("");
   const [cardHolder, setCardHolder] = useState("");
   const [month, setMonth] = useState("MM");
   const [year, setYear] = useState("YY");
-  const [cvv, setCvv] = useState(null);
+  const [cvv, setCvv] = useState("");
   const [focus, setFocus] = useState(null);
+  const [isValidCard, setIsValidCard] = useState(true);
 
-  //   useEffect(() => {
-  //     cardNumber === "" && setCardNumber("#### #### #### ####");
-  //     cardHolder === "" && setCardHolder("Name Surname");
-  //   }, [cardNumber, cardHolder]);
+  const submitForm = () => {
+    const result = {
+      CardNumber: cardNumber,
+      CardHolder: cardHolder,
+      expiry: `${month}/${year}`,
+      cvv: cvv,
+    };
+
+    return alert(JSON.stringify(result, 0, 2));
+  };
+
+  const cardHolderNameHandler = (event) => {
+    const regex = /\d+/g;
+    if (!regex.test(event.target.value)) {
+      setCardHolder(event.target.value);
+    }
+  };
+
+  useEffect(() => {
+    const issuer = Payment.fns.cardType(cardNumber);
+    if (!issuer && cardNumber !== "") {
+      setIsValidCard(false);
+    } else {
+      setIsValidCard(true);
+    }
+  }, [cardNumber]);
 
   return (
     <>
-      <div className={`${styles.main}`}>
+      <div className={`${styles.main}`} onSubmit={submitForm}>
         <div className={`${styles.card_container}`}>
           <Cards
             number={cardNumber}
@@ -30,6 +55,11 @@ export const FormComponent = () => {
           />
         </div>
         <form className={`${styles.card_form}`}>
+          {!isValidCard && (
+            <p className={`${styles.alert}`}>
+              Invalid Card Number!! Please enter a valid card number.
+            </p>
+          )}
           <label htmlFor="cardNumber" className={`${styles.labels}`}>
             Card Number
           </label>
@@ -38,6 +68,8 @@ export const FormComponent = () => {
             id="cardNumber"
             name="number"
             required
+            maxLength="19"
+            value={formatCreditCardNumber(cardNumber)}
             className={`${styles.input_fields}`}
             onChange={(event) => setCardNumber(event.target.value)}
             onFocus={(event) => setFocus(event.target.name)}
@@ -50,8 +82,9 @@ export const FormComponent = () => {
             id="cardName"
             name="name"
             required
+            value={cardHolder}
             className={`${styles.input_fields}`}
-            onChange={(event) => setCardHolder(event.target.value)}
+            onChange={(event) => cardHolderNameHandler(event)}
             onFocus={(event) => setFocus(event.target.name)}
           />
           <div className={`${styles.date_cvv}`}>
@@ -110,6 +143,7 @@ export const FormComponent = () => {
                 id="cvv"
                 name="cvc"
                 required
+                maxLength="3"
                 value={cvv}
                 className={`${styles.input_fields}`}
                 onChange={(event) => setCvv(event.target.value)}
@@ -121,14 +155,6 @@ export const FormComponent = () => {
             Submit
           </button>
         </form>
-
-        {/* <img
-          src={bgCard}
-          alt="creditCardBg"
-          className={`${styles.bg_card_img}`}
-        />
-        <img src={chip} alt="chip" className={`${styles.chip_img}`} />
-        <div className={`${styles.card_number}`}>{cardNumber}</div> */}
       </div>
     </>
   );

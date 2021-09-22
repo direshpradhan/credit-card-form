@@ -8,9 +8,14 @@
   width: 35%;
   margin: 0 auto;
   border: 1px solid lightgray;
-  padding: 8rem 2rem 1.5rem;
+  padding: 7rem 2rem 1.5rem;
   border-radius: 0.5rem;
   background-color: white;
+}
+
+.alert {
+  color: red;
+  margin-bottom: 1rem;
 }
 
 .input_fields {
@@ -60,6 +65,10 @@
   background-color: #2563eb;
   color: white;
   cursor: pointer;
+}
+
+.btn_submit:hover {
+  opacity: 0.9;
 }
 
 .card_container {
