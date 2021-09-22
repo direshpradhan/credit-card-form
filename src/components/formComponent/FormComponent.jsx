@@ -122,7 +122,6 @@ export const FormComponent = () => {
               onFocus={(event) => setFocus(event.target.name)}
             >
               <option value="YY">Year</option>
-              <option value="20">2020</option>
               <option value="21">2021</option>
               <option value="22">2022</option>
               <option value="23">2023</option>

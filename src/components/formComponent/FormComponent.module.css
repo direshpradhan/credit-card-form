@@ -5,7 +5,7 @@
 .card_form {
   display: flex;
   flex-direction: column;
-  width: 35%;
+  width: 95%;
   margin: 0 auto;
   border: 1px solid lightgray;
   padding: 7rem 2rem 1.5rem;
@@ -40,8 +40,6 @@
 }
 
 .date_cvv {
-  display: flex;
-  column-gap: 1.5rem;
   margin-bottom: 1rem;
 }
 
@@ -49,12 +47,10 @@
 .cvv {
   display: flex;
   flex-direction: column;
-  width: 30%;
 }
 
 .year {
-  align-self: flex-end;
-  width: 30%;
+  width: 100%;
 }
 
 .btn_submit {
@@ -74,6 +70,46 @@
 .card_container {
   position: absolute;
   top: -7rem;
-  left: 38%;
-  right: 38%;
+  left: 10%;
+  right: 10%;
+}
+
+@media screen and (min-width: 768px) {
+  .card_form {
+    width: 50%;
+  }
+
+  .card_container {
+    left: 30%;
+    right: 30%;
+  }
+
+  .date_cvv {
+    display: flex;
+    column-gap: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .month,
+  .cvv {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+  }
+
+  .year {
+    align-self: flex-end;
+    width: 30%;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .card_form {
+    width: 35%;
+  }
+
+  .card_container {
+    left: 35%;
+    right: 35%;
+  }
 }
